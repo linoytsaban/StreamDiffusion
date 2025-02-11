@@ -10,7 +10,9 @@
 
   export let pipelineParams: Fields;
 
-  $: advanceOptions = Object.values(pipelineParams)?.filter((e) => e?.hide == true);
+  $: advanceOptions = Object.values(pipelineParams)?.filter(
+    (e) => e?.hide == true && e?.disabled !== true
+  );
   $: featuredOptions = Object.values(pipelineParams)?.filter((e) => e?.hide !== true);
 </script>
 
@@ -32,15 +34,14 @@
       {/each}
     {/if}
   </div>
-
-  <details>
-    <summary class="cursor-pointer font-medium">Advanced Options</summary>
-    <div
-      class="grid grid-cols-1 items-center gap-3 {Object.values(pipelineParams).length > 5
-        ? 'sm:grid-cols-2'
-        : ''}"
-    >
-      {#if advanceOptions}
+  {#if advanceOptions && advanceOptions.length > 0}
+    <details>
+      <summary class="cursor-pointer font-medium">Advanced Options</summary>
+      <div
+        class="grid grid-cols-1 items-center gap-3 {Object.values(pipelineParams).length > 5
+          ? 'sm:grid-cols-2'
+          : ''}"
+      >
         {#each advanceOptions as params}
           {#if params.field === FieldType.RANGE}
             <InputRange {params} bind:value={$pipelineValues[params.id]}></InputRange>
@@ -54,7 +55,7 @@
             <Selectlist {params} bind:value={$pipelineValues[params.id]}></Selectlist>
           {/if}
         {/each}
-      {/if}
-    </div>
-  </details>
+      </div>
+    </details>
+  {/if}
 </div>

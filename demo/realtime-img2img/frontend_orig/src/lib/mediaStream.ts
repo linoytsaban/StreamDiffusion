@@ -1,6 +1,5 @@
-import { writable, type Writable, type Readable, get, derived } from 'svelte/store';
+import { writable, type Writable, get } from 'svelte/store';
 
-const BASE_HEIGHT = 720;
 export enum MediaStreamStatusEnum {
     INIT = "init",
     CONNECTED = "connected",
@@ -24,17 +23,11 @@ export const mediaStreamActions = {
                 console.error(err);
             });
     },
-    async start(mediaDevicedID?: string, aspectRatio: number = 1) {
+    async start(mediaDevicedID?: string) {
         const constraints = {
             audio: false,
             video: {
-                width: {
-                    ideal: BASE_HEIGHT * aspectRatio,
-                },
-                height: {
-                    ideal: BASE_HEIGHT,
-                },
-                deviceId: mediaDevicedID
+                width: 1024, height: 1024, deviceId: mediaDevicedID
             }
         };
 
@@ -43,7 +36,6 @@ export const mediaStreamActions = {
             .then((stream) => {
                 mediaStreamStatus.set(MediaStreamStatusEnum.CONNECTED);
                 mediaStream.set(stream);
-
             })
             .catch((err) => {
                 console.error(`${err.name}: ${err.message}`);
@@ -73,33 +65,19 @@ export const mediaStreamActions = {
             console.log(JSON.stringify(videoTrack.getConstraints(), null, 2));
             mediaStreamStatus.set(MediaStreamStatusEnum.CONNECTED);
             mediaStream.set(captureStream)
-
-            const capabilities = videoTrack.getCapabilities();
-            const aspectRatio = capabilities.aspectRatio;
-            console.log('Aspect Ratio Constraints:', aspectRatio);
         } catch (err) {
             console.error(err);
         }
 
     },
-    async switchCamera(mediaDevicedID: string, aspectRatio: number) {
-        console.log("Switching camera");
+    async switchCamera(mediaDevicedID: string) {
         if (get(mediaStreamStatus) !== MediaStreamStatusEnum.CONNECTED) {
             return;
         }
         const constraints = {
             audio: false,
-            video: {
-                width: {
-                    ideal: BASE_HEIGHT * aspectRatio,
-                },
-                height: {
-                    ideal: BASE_HEIGHT,
-                },
-                deviceId: mediaDevicedID
-            }
+            video: { width: 1024, height: 1024, deviceId: mediaDevicedID }
         };
-        console.log("Switching camera", constraints);
         await navigator.mediaDevices
             .getUserMedia(constraints)
             .then((stream) => {

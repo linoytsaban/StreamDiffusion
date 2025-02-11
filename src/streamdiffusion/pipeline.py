@@ -15,16 +15,16 @@ from streamdiffusion.image_filter import SimilarImageFilter
 
 class StreamDiffusion:
     def __init__(
-        self,
-        pipe: StableDiffusionPipeline,
-        t_index_list: List[int],
-        torch_dtype: torch.dtype = torch.float16,
-        width: int = 512,
-        height: int = 512,
-        do_add_noise: bool = True,
-        use_denoising_batch: bool = True,
-        frame_buffer_size: int = 1,
-        cfg_type: Literal["none", "full", "self", "initialize"] = "self",
+    self,
+    pipe: StableDiffusionXLPipeline,
+    t_index_list: List[int],
+    torch_dtype: torch.dtype = torch.float16,
+    width: int = 1024,
+    height: int = 1024,
+    do_add_noise: bool = True,
+    use_denoising_batch: bool = True,
+    frame_buffer_size: int = 1,
+    cfg_type: Literal["none", "full", "self", "initialize"] = "self",
     ) -> None:
         self.device = pipe.device
         self.dtype = torch_dtype

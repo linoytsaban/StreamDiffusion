@@ -105,7 +105,7 @@
         There are <span id="queue_size" class="font-bold">{currentQueueSize}</span>
         user(s) sharing the same GPU, affecting real-time performance. Maximum queue size is {maxQueueSize}.
         <a
-          href="https://huggingface.co/spaces/radames/Real-Time-SD-Turbo?duplicate=true"
+          href="https://huggingface.co/spaces/radames/Real-Time-Latent-Consistency-Model?duplicate=true"
           target="_blank"
           class="text-blue-500 underline hover:no-underline">Duplicate</a
         > and run it on your own GPU.
@@ -113,19 +113,19 @@
     {/if}
   </article>
   {#if pipelineParams}
-    <article class="my-3 grid grid-cols-1 gap-3 sm:grid-cols-4">
+    <article class="my-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
       {#if isImageMode}
-        <div class="col-span-2 sm:col-start-1">
+        <div class="sm:col-start-1">
           <VideoInput
             width={Number(pipelineParams.width.default)}
             height={Number(pipelineParams.height.default)}
           ></VideoInput>
         </div>
       {/if}
-      <div class={isImageMode ? 'col-span-2 sm:col-start-3' : 'col-span-4'}>
+      <div class={isImageMode ? 'sm:col-start-2' : 'col-span-2'}>
         <ImagePlayer />
       </div>
-      <div class="sm:col-span-4 sm:row-start-2">
+      <div class="sm:col-span-2">
         <Button on:click={toggleLcmLive} {disabled} classList={'text-lg my-1 p-2'}>
           {#if isLCMRunning}
             Stop

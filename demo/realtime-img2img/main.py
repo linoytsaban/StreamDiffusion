@@ -19,8 +19,9 @@ import torch
 from config import config, Args
 from util import pil_to_frame, bytes_to_pil
 from connection_manager import ConnectionManager, ServerFullException
-from img2img import Pipeline
-
+#from img2img import Pipeline
+from img2imgSDXLTurbo import Pipeline
+#from controlnetSDXLTurbo import Pipeline
 # fix mime error on windows
 mimetypes.add_type("application/javascript", ".js")
 
