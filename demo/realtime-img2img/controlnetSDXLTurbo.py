@@ -27,8 +27,8 @@ from pydantic import BaseModel, Field
 from PIL import Image
 import math
 
-# controlnet_model = "diffusers/controlnet-canny-sdxl-1.0-small"
-controlnet_model = "thibaud/controlnet-openpose-sdxl-1.0"
+controlnet_model = "diffusers/controlnet-canny-sdxl-1.0-small"
+#controlnet_model = "thibaud/controlnet-openpose-sdxl-1.0"
 #base = "stabilityai/stable-diffusion-xl-base-1.0"
 base = "stabilityai/sdxl-turbo"
 # repo = "ByteDance/SDXL-Lightning"
@@ -39,32 +39,32 @@ NUM_STEPS = 2
 
 default_prompt = "Portrait of The Terminator with , glare pose, detailed, intricate, full of colour, cinematic lighting, trending on artstation, 8k, hyperrealistic, focused, extreme details, unreal engine 5 cinematic, masterpiece"
 default_negative_prompt = "blurry, low quality, render, 3D, oversaturated"
-page_content = """
-<h1 class="text-3xl font-bold">Real-Time Latent Consistency Model SDXL</h1>
-<h3 class="text-xl font-bold">SDXL-Lightining + LCM + LoRA + Controlnet</h3>
-<p class="text-sm">
-    This demo showcases
-    <a
-    href="https://huggingface.co/blog/lcm_lora"
-    target="_blank"
-    class="text-blue-500 underline hover:no-underline">LCM LoRA</a>
-+ SDXL + Controlnet + Image to Image pipeline using
-    <a
-    href="https://huggingface.co/docs/diffusers/main/en/using-diffusers/lcm#performing-inference-with-lcm"
-    target="_blank"
-    class="text-blue-500 underline hover:no-underline">Diffusers</a
-    > with a MJPEG stream server.
-</p>
-<p class="text-sm text-gray-500">
-    Change the prompt to generate different images, accepts <a
-    href="https://github.com/damian0815/compel/blob/main/doc/syntax.md"
-    target="_blank"
-    class="text-blue-500 underline hover:no-underline">Compel</a
-    > syntax.
-</p>
-"""
+# page_content = """
+# <h1 class="text-3xl font-bold">Real-Time Latent Consistency Model SDXL</h1>
+# <h3 class="text-xl font-bold">SDXL-Lightining + LCM + LoRA + Controlnet</h3>
+# <p class="text-sm">
+#     This demo showcases
+#     <a
+#     href="https://huggingface.co/blog/lcm_lora"
+#     target="_blank"
+#     class="text-blue-500 underline hover:no-underline">LCM LoRA</a>
+# + SDXL + Controlnet + Image to Image pipeline using
+#     <a
+#     href="https://huggingface.co/docs/diffusers/main/en/using-diffusers/lcm#performing-inference-with-lcm"
+#     target="_blank"
+#     class="text-blue-500 underline hover:no-underline">Diffusers</a
+#     > with a MJPEG stream server.
+# </p>
+# <p class="text-sm text-gray-500">
+#     Change the prompt to generate different images, accepts <a
+#     href="https://github.com/damian0815/compel/blob/main/doc/syntax.md"
+#     target="_blank"
+#     class="text-blue-500 underline hover:no-underline">Compel</a
+#     > syntax.
+# </p>
+# """
 
-
+page_content = ""
 
 class Pipeline:
     class Info(BaseModel):
@@ -277,10 +277,10 @@ class Pipeline:
             negative_prompt_embeds = _prompt_embeds[1:2]
             negative_pooled_prompt_embeds = pooled_prompt_embeds[1:2]
 
-        # control_image = self.canny_torch(
-        #     params.image, params.canny_low_threshold, params.canny_high_threshold
-        # )
-        control_image = self.openpose(params.image)
+        control_image = self.canny_torch(
+            params.image, params.canny_low_threshold, params.canny_high_threshold
+        )
+        #control_image = self.openpose(params.image)
         # image = cv2.cvtColor(np.array(params.image), cv2.COLOR_BGR2RGB)
         # results = self.pose.process(image)
         # control_image = image.copy()
